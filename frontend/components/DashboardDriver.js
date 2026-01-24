@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { Car, Bell, MapPin, Clock, User, ChevronRight, Loader2 } from "lucide-react";
 import { useAuth } from "../app/context/AuthContext";
 
@@ -37,13 +37,13 @@ export default function DashboardDriver() {
             });
 
             if (!unassignedResponse.ok || !parkingResponse.ok) {
-                // console.log(unassignedResponse, parkingResponse);
+                console.log(unassignedResponse, parkingResponse);
                 throw new Error("Failed to fetch driver data");
             }
 
             const unassignedData = await unassignedResponse.json();
             const parkingData = await parkingResponse.json();
-            // console.log(unassignedData, parkingData);
+            console.log(unassignedData, parkingData);
             setUnassignedCars(unassignedData.data || []);
             setParkingCars(parkingData.data || []);
         } catch (err) {
@@ -84,7 +84,7 @@ export default function DashboardDriver() {
             const token = sessionStorage.getItem("authToken");
 
             const nextStatus = parkingCars[0].status === "PARKING" ? "PARKED" : "RETRIEVED";
-            // console.log(nextStatus);
+            console.log(nextStatus);
 
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/driver/update-status/${carId}`, {
                 method: "PUT",
